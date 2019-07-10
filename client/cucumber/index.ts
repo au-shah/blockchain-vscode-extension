@@ -76,6 +76,8 @@ async function runCucumberTest(): Promise<any> {
             features.splice(4, 0, feature);
         } else if (file === 'transaction.feature') {
             features.splice(5, 0, feature);
+        } else if (file === 'transaction.feature') {
+            features.splice(6, 0, feature);
         } else {
             otherFeatures.push(feature);
         }
@@ -111,6 +113,7 @@ async function runCucumberTest(): Promise<any> {
         colorsEnabled: true,
         cwd: '/',
         log: (data: any): any => {
+            // tslint:disable-next-line:no-console
             console.log(data);
 
         },
@@ -127,7 +130,12 @@ async function runCucumberTest(): Promise<any> {
     return runtime.start();
 }
 
+<<<<<<< HEAD
 export async function run(testsRoot: string, clb: (error: any, failures?: number) => void): Promise<void> {
+=======
+async function run(testsRoot: string, clb: (error: any, failures?: number) => void): Promise<void> {
+    // tslint:disable-next-line:no-console
+>>>>>>> added evaluate cucumber test
     console.log(testsRoot);
     try {
 
@@ -160,6 +168,7 @@ export async function run(testsRoot: string, clb: (error: any, failures?: number
         }
 
     } catch (error) {
+        // tslint:disable-next-line:no-console
         console.log('Error:', error);
         clb(error);
     }
