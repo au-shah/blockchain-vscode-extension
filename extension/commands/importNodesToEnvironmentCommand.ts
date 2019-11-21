@@ -42,9 +42,18 @@ export async function importNodesToEnvironment(environmentRegistryEntry: FabricE
             environmentRegistryEntry = chosenEnvironment.data;
         }
 
-        const createMethod: string = await UserInputUtil.showQuickPick('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]);
-        if (!createMethod) {
-            return;
+        let createMethod: string;
+        if (fromAddEnvironment) {
+            createMethod = await UserInputUtil.showQuickPick('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]);
+            if (!createMethod) {
+                return;
+            }
+        } else {
+            if (environmentRegistryEntry.url) {
+                createMethod = UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS;
+            } else {
+                createMethod = UserInputUtil.ADD_ENVIRONMENT_FROM_NODES;
+            }
         }
 
         const nodesToUpdate: FabricNode[] = [];
@@ -105,14 +114,22 @@ export async function importNodesToEnvironment(environmentRegistryEntry: FabricE
                 throw new Error('Error importing the keytar module');
             }
 
+            let url: string;
+            let apiKey: string;
             const GET_ALL_COMPONENTS: string = '/ak/api/v1/components';
-            const url: string = await UserInputUtil.showInputBox('Enter the url of the ops tools you want to connect to');
-            if (!url) {
-                return;
-            }
-            const apiKey: string = await UserInputUtil.showInputBox('Enter the api key of the ops tools you want to connect to');
-            if (!apiKey) {
-                return;
+
+            if (environmentRegistryEntry.url) {
+                url = environmentRegistryEntry.url;
+                apiKey = await keytar.getPassword(UserInputUtil.KEYTAR_SERVICE_NAME, url);
+            } else {
+                url = await UserInputUtil.showInputBox('Enter the url of the ops tools you want to connect to');
+                if (!url) {
+                    return;
+                }
+                apiKey = await UserInputUtil.showInputBox('Enter the api key of the ops tools you want to connect to');
+                if (!apiKey) {
+                    return;
+                }
             }
 
             let response: any;
@@ -121,8 +138,6 @@ export async function importNodesToEnvironment(environmentRegistryEntry: FabricE
                 response = await Axios.get(api, {
                     headers: { Authorization: `Bearer ${apiKey}` }
                 });
-
-                environmentRegistryEntry.url = url;
 
                 const data: any = response.data;
                 const filteredData: FabricNode[] = data.filter((_data: any) => _data.api_url)
@@ -135,8 +150,25 @@ export async function importNodesToEnvironment(environmentRegistryEntry: FabricE
                         _data.name = _data.display_name;
                         delete _data.display_name;
                         return FabricNode.pruneNode(_data);
-                    }
-                );
+                    });
+                // If it's an ops instance that already exists..
+                if (environmentRegistryEntry.url) {
+                    const currentNodesURLs: string[] = []; // get array of api_url
+                    const envInstance: FabricEnvironment = new FabricEnvironment(environmentRegistryEntry.name);
+                    const currentNodes: FabricNode[] = await envInstance.getNodes();
+                    currentNodes.forEach((_currentNode: FabricNode) => {
+                        currentNodesURLs.push(_currentNode.api_url);
+                    });
+                    const uniqueNodes: FabricNode[] = [];
+                    filteredData.forEach((_fabricNode: FabricNode) => {
+                        if (!currentNodesURLs.includes(_fabricNode.api_url)) {
+                            uniqueNodes.push(_fabricNode);
+                        }
+                    });
+                    nodesToUpdate.push(...uniqueNodes);
+                } else {
+                    nodesToUpdate.push(...filteredData);
+                }
 
                 // Ask user to chose which nodes to add to the environemnt.
                 let chosenNodesToUpdate: FabricNode[];
@@ -156,10 +188,13 @@ export async function importNodesToEnvironment(environmentRegistryEntry: FabricE
                 }
             }
 
-            try {
-                await keytar.setPassword('blockchain-vscode-ext', url, apiKey);
-            } catch (error) {
-                throw new Error(`Unable to store API key securely in your keychain: ${error.message}`);
+            if (!environmentRegistryEntry.url) {
+                try {
+                    environmentRegistryEntry.url = url;
+                    await keytar.setPassword(UserInputUtil.KEYTAR_SERVICE_NAME, url, apiKey);
+                } catch (error) {
+                    throw new Error(`Unable to store API key securely in your keychain: ${error.message}`);
+                }
             }
         }
 

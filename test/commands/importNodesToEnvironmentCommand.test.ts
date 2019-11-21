@@ -166,7 +166,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should test nodes can be added from URL and key', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             showInputBoxStub.withArgs('Enter the url of the ops tools you want to connect to').resolves('someURL');
             showInputBoxStub.withArgs('Enter the api key of the ops tools you want to connect to').resolves('someKey');
             const setPasswordStub: sinon.SinonStub = mySandBox.stub().resolves();
@@ -192,7 +192,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle when user cancels when asked for method to add nodes to environment', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(undefined);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(undefined);
             await vscode.commands.executeCommand(ExtensionCommands.IMPORT_NODES_TO_ENVIRONMENT);
 
             showInputBoxStub.withArgs('Enter the url of the ops tools you want to connect to').should.not.have.been.called;
@@ -205,7 +205,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle when user cancels when asked for url', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             showInputBoxStub.withArgs('Enter the url of the ops tools you want to connect to').resolves(undefined);
 
             await vscode.commands.executeCommand(ExtensionCommands.IMPORT_NODES_TO_ENVIRONMENT);
@@ -219,7 +219,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle when user cancels when asked for api key', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             showInputBoxStub.withArgs('Enter the url of the ops tools you want to connect to').resolves('someURL');
             showInputBoxStub.withArgs('Enter the api key of the ops tools you want to connect to').resolves(undefined);
 
@@ -233,7 +233,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle when the keytar module is imported successfully through .asar', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             showInputBoxStub.withArgs('Enter the url of the ops tools you want to connect to').resolves('someURL');
             showInputBoxStub.withArgs('Enter the api key of the ops tools you want to connect to').resolves('someKey');
             const requireModuleSpy: sinon.SinonSpy = mySandBox.spy(ExtensionUtil, 'getModule');
@@ -259,7 +259,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle when the keytar module is imported successfully (without .asar)', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             showInputBoxStub.withArgs('Enter the url of the ops tools you want to connect to').resolves('someURL');
             showInputBoxStub.withArgs('Enter the api key of the ops tools you want to connect to').resolves('someKey');
             const requireAsarModuleStub: sinon.SinonStub = mySandBox.stub(ExtensionUtil, 'getModuleAsar');
@@ -287,7 +287,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle when the keytar module cannot be imported at all', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             showInputBoxStub.withArgs('Enter the url of the ops tools you want to connect to').resolves('someURL');
             showInputBoxStub.withArgs('Enter the api key of the ops tools you want to connect to').resolves('someKey');
             const requireAsarModuleStub: sinon.SinonStub = mySandBox.stub(ExtensionUtil, 'getModuleAsar');
@@ -307,7 +307,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle when the api key cannot be stored saved securely onto the keychain using the setPassword function', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             showInputBoxStub.withArgs('Enter the url of the ops tools you want to connect to').resolves('someURL');
             showInputBoxStub.withArgs('Enter the api key of the ops tools you want to connect to').resolves('someKey');
             axiosGetStub.withArgs(`someURL/ak/api/v1/components`, { headers: { Authorization: `Bearer someKey` }}).resolves({ data: opsToolNodes });
@@ -330,7 +330,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should test nodes can be added from URL and key (non TLS network)', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             const uri: vscode.Uri = vscode.Uri.file(path.join('myPath'));
             browseStub.onFirstCall().resolves([uri]);
 
@@ -599,7 +599,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle error connecting to Ops Tool URL when adding nodes to existing environment', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             const uri: vscode.Uri = vscode.Uri.file(path.join('myPath'));
             browseStub.onFirstCall().resolves([uri]);
             getNodesStub.onSecondCall().resolves([]);
@@ -624,7 +624,7 @@ describe('ImportNodesToEnvironmentCommand', () => {
         });
 
         it('should handle error connecting to Ops Tool URL when adding nodes via add environment', async () => {
-            addMethodChooserStub.withArgs('Choose a method to import nodes to an environment', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
+            addMethodChooserStub.withArgs('Choose a method to import nodes', [UserInputUtil.ADD_ENVIRONMENT_FROM_NODES, UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS]).resolves(UserInputUtil.ADD_ENVIRONMENT_FROM_OPS_TOOLS);
             const uri: vscode.Uri = vscode.Uri.file(path.join('myPath'));
             browseStub.onFirstCall().resolves([uri]);
             const error: Error = new Error('some error');
