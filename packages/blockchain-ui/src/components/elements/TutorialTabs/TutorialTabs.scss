@@ -1,0 +1,59 @@
+@import '@carbon/colors/scss/colors';
+
+.bx--tab-content {
+    width: 100%;
+    padding-left: 0px;
+    background-color: transparent;
+}
+
+.bx--tabs_nav-link {
+    border-bottom: none;
+    border-top: 2px solid $gray-20;
+
+    &:focus:active {
+        outline: none;
+        border-bottom: 2px solid $gray-20
+    }
+}
+
+a.bx--tabs__nav-link:focus, a.bx--tabs__nav-link:active {
+    outline: none;
+}
+
+.bx--tabs__nav-item {
+    background-color: $gray-20;    
+
+    &:hover {
+        &:not(.bx--tabs__nav-item--disabled):not(.bx--tabs__nav-item--selected) {
+            background-color: $gray-20;
+
+            .bx--tabs__nav-link {
+                border-bottom: none;
+            }
+        }
+    }
+}
+
+.bx--tabs__nav-item .bx--tabs__nav-link {
+    -webkit-transition: none;
+    transition: none;
+}
+
+.bx--tabs__nav-item--selected {
+    background-color: $gray-10;
+
+    &:not(.bx--tabs__nav-item--disabled) {
+        &:hover {
+            background-color: $gray-10;
+        }
+
+        .bx--tabs__nav-link {
+            border-bottom: none;
+            border-top: 2px solid $blue-60;
+
+            &:focus {
+                border-bottom: none;
+            }
+        }
+    }
+}

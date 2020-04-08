@@ -249,7 +249,7 @@
             },
             {
                 "command": "reactTutorialGallery.open",
-                "title": "View React Tutorial Gallery",
+                "title": "Transact with Smart Contract",
                 "category": "IBM Blockchain Platform"
             },
             {
@@ -602,6 +602,10 @@
                 },
                 {
                     "command": "transactionPage.open",
+                    "when": "false"
+                },
+                {
+                    "command": "reactTutorialGallery.open",
                     "when": "false"
                 },
                 {

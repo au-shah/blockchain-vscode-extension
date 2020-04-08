@@ -144,6 +144,73 @@
     }
 }
 
+@mixin tutorial-page-dark {
+    background-color: $gray-90;
+    
+    .tutorial-heading-background {
+        background-color: black;
+    }
+}
+
+@mixin tutorial-tabs-dark {    
+    .bx--tabs_nav-link {
+        border-bottom: none;
+        border-top: 2px solid $gray-80;
+    
+        &:focus:active {
+            outline: none;
+            border-bottom-color: $gray-80;
+        }
+    }
+    
+    a.bx--tabs__nav-link {
+        color: white;
+        border-bottom-color: $gray-80;
+    }
+
+    a.bx--tabs__nav-link:focus, a.bx--tabs__nav-link:active {
+        outline: none;
+    }
+    
+    .bx--tabs__nav-item {
+        background-color: $gray-80;    
+    
+        &:hover {
+            &:not(.bx--tabs__nav-item--disabled):not(.bx--tabs__nav-item--selected) {
+                background-color: $gray-80;
+    
+                .bx--tabs__nav-link {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    
+    .bx--tabs__nav-item .bx--tabs__nav-link {
+        -webkit-transition: none;
+        transition: none;
+    }
+    
+    .bx--tabs__nav-item--selected {
+        background-color: $gray-90;
+    
+        &:not(.bx--tabs__nav-item--disabled) {
+            &:hover {
+                background-color: $gray-90;
+            }
+    
+            .bx--tabs__nav-link {
+                border-bottom: none;
+                border-top: 2px solid $blue-40;
+    
+                &:focus {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+}
+
 
 //-------------------------
 // light theme styles

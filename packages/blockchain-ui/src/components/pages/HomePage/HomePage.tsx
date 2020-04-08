@@ -19,14 +19,14 @@ class HomePage extends Component<IProps> {
         const tutorialTileString: string = 'Complete tutorials to level up your Fabric development skills. Earn rewards such as badges and access to our developer community by completing lessons.';
 
         // to access the new react tutorial page, comment out the first customTileOptions and use the second one instead
-        const customTileOptions: {actionType: 'app' | 'vscode', command: string} = {
-            actionType: 'vscode',
-            command: ExtensionCommands.OPEN_TUTORIAL_GALLERY
-        };
         // const customTileOptions: {actionType: 'app' | 'vscode', command: string} = {
         //     actionType: 'vscode',
-        //     command: ExtensionCommands.OPEN_REACT_TUTORIAL_GALLERY
+        //     command: ExtensionCommands.OPEN_TUTORIAL_GALLERY
         // };
+        const customTileOptions: {actionType: 'app' | 'vscode', command: string} = {
+            actionType: 'vscode',
+            command: ExtensionCommands.OPEN_REACT_TUTORIAL_GALLERY
+        };
 
         return (
             <div className='bx--grid home-page-container'>
